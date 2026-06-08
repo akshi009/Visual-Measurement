@@ -70,7 +70,7 @@
             grid-template-columns: 300px 1fr;
             gap: 24px;
             margin-bottom: 40px;
-            align-items: start
+            align-items: start;
         }
 
         .panel {
@@ -78,7 +78,10 @@
             border: 1px solid var(--border);
             border-radius: 14px;
             padding: 24px;
-            box-shadow: var(--shadow)
+            box-shadow: var(--shadow);
+            height: 400px;
+            position: sticky;
+            top: 80px;
         }
 
         .panel h2 {
@@ -437,6 +440,436 @@
         .footer-links a:hover {
             color: #fff
         }
+
+        /* ── CONVERTER PANEL ── */
+        .converter-panel {
+            background: var(--white);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 24px;
+            box-shadow: var(--shadow);
+            margin-top: 24px;
+        }
+
+        .conv-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 18px;
+        }
+
+        .conv-header h3 {
+            font-family: 'Sora', sans-serif;
+            font-size: 16px;
+            font-weight: 600;
+            letter-spacing: -.02em;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .conv-header h3 svg {
+            color: var(--teal);
+        }
+
+        .conv-cat-chips {
+            display: flex;
+            gap: 6px;
+        }
+
+        .conv-cat-chip {
+            font-size: 11px;
+            padding: 4px 12px;
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            cursor: pointer;
+            color: var(--text2);
+            background: var(--white);
+            transition: .15s;
+            font-family: 'DM Sans', sans-serif;
+            font-weight: 500;
+        }
+
+        .conv-cat-chip:hover {
+            border-color: var(--teal);
+            color: var(--teal);
+        }
+
+        .conv-cat-chip.active {
+            border-color: var(--teal);
+            background: var(--teal-lt);
+            color: var(--teal);
+        }
+
+        .conv-body {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            gap: 12px;
+            align-items: end;
+        }
+
+        .conv-col label {
+            font-size: 11px;
+            font-weight: 500;
+            color: var(--text3);
+            display: block;
+            margin-bottom: 5px;
+            letter-spacing: .02em;
+            text-transform: uppercase;
+        }
+
+        .conv-col input,
+        .conv-col select {
+            margin-bottom: 0;
+        }
+
+        .conv-swap-wrap {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding-bottom: 2px;
+        }
+
+        .conv-swap-btn {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            border: 1px solid var(--border);
+            background: var(--bg);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text2);
+            transition: .2s;
+        }
+
+        .conv-swap-btn:hover {
+            border-color: var(--teal);
+            color: var(--teal);
+            background: var(--teal-lt);
+            transform: rotate(180deg);
+        }
+
+        .conv-result-card {
+            margin-top: 16px;
+            background: linear-gradient(135deg, #f0fdfa 0%, #ecfdf5 50%, #f0f9ff 100%);
+            border: 1px solid #ccfbf1;
+            border-radius: 10px;
+            padding: 16px 18px;
+            transition: .3s;
+        }
+
+        .conv-result-main {
+            font-family: 'Sora', sans-serif;
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 4px;
+            display: flex;
+            align-items: baseline;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+
+        .conv-result-main .conv-equals {
+            color: var(--teal);
+            font-size: 18px;
+        }
+
+        .conv-result-main .conv-result-val {
+            color: var(--teal);
+        }
+
+        .conv-result-formula {
+            font-size: 12px;
+            color: var(--text3);
+            margin-top: 6px;
+            font-family: 'DM Sans', sans-serif;
+        }
+
+        .conv-result-error {
+            color: #e11d48;
+            font-size: 13px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .conv-quick {
+            margin-top: 18px;
+            border-top: 1px solid var(--border);
+            padding-top: 14px;
+        }
+
+        .conv-quick-title {
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: .08em;
+            text-transform: uppercase;
+            color: var(--text3);
+            margin-bottom: 8px;
+        }
+
+        .conv-quick-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 6px;
+        }
+
+        .conv-quick-item {
+            font-size: 12px;
+            color: var(--text2);
+            padding: 6px 10px;
+            background: var(--bg);
+            border-radius: 7px;
+            cursor: pointer;
+            transition: .15s;
+            text-align: center;
+            border: 1px solid transparent;
+        }
+
+        .conv-quick-item:hover {
+            border-color: var(--teal);
+            color: var(--teal);
+            background: var(--teal-lt);
+        }
+
+        .conv-quick-item span {
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        /* ══════════════════════════════════════════════
+           RESPONSIVE BREAKPOINTS
+           ══════════════════════════════════════════════ */
+
+        /* ── Tablet (≤ 900px) ── */
+        @media (max-width: 900px) {
+            nav {
+                padding: 0 24px;
+            }
+
+            main {
+                padding: 28px 16px;
+            }
+
+            .top-grid {
+                grid-template-columns: 1fr;
+                gap: 18px;
+            }
+
+            .panel {
+                height: auto;
+                position: static;
+            }
+
+            .viz-panel {
+                min-height: 380px;
+            }
+
+            .comp-row {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 8px;
+            }
+
+            footer {
+                padding: 28px 24px;
+                flex-direction: column;
+                gap: 14px;
+                text-align: center;
+            }
+
+            .footer-links {
+                justify-content: center;
+                flex-wrap: wrap;
+                gap: 14px;
+            }
+        }
+
+        /* ── Mobile (≤ 600px) ── */
+        @media (max-width: 600px) {
+            nav {
+                padding: 0 16px;
+                height: 50px;
+            }
+
+            .nav-logo {
+                font-size: 15px;
+            }
+
+            main {
+                padding: 18px 10px;
+            }
+
+            .top-grid {
+                gap: 14px;
+                margin-bottom: 24px;
+            }
+
+            .panel {
+                padding: 18px 16px;
+                border-radius: 12px;
+            }
+
+            .panel h2 {
+                font-size: 15px;
+                margin-bottom: 14px;
+            }
+
+            .qty-row {
+                grid-template-columns: 1fr 1fr;
+                gap: 8px;
+            }
+
+            .gen-btn {
+                padding: 10px;
+                font-size: 12.5px;
+                border-radius: 8px;
+            }
+
+            .c-chip {
+                font-size: 10px;
+                padding: 3px 8px;
+            }
+
+            .viz-panel {
+                min-height: 320px;
+                border-radius: 12px;
+            }
+
+            .viz-label {
+                padding: 8px 12px;
+                gap: 10px;
+                border-radius: 8px;
+                grid-template-columns: 1fr 1px 1fr;
+            }
+
+            .vlabel-tag {
+                font-size: 7px;
+            }
+
+            .vlabel-val {
+                font-size: 11px;
+            }
+
+            .comp-row {
+                grid-template-columns: 1fr;
+                gap: 8px;
+            }
+
+            .comp-card {
+                padding: 10px 12px;
+                border-radius: 8px;
+            }
+
+            .comp-card-val {
+                font-size: 13px;
+            }
+
+            .tips-panel {
+                padding: 14px 14px;
+                border-radius: 10px;
+                margin-bottom: 24px;
+            }
+
+            .tip-row {
+                font-size: 12px;
+            }
+
+            .converter-panel {
+                padding: 16px 14px;
+                border-radius: 10px;
+            }
+
+            .conv-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+
+            .conv-body {
+                grid-template-columns: 1fr;
+                gap: 14px;
+            }
+
+            .conv-swap-wrap {
+                justify-content: center;
+            }
+
+            .conv-swap-btn {
+                transform: rotate(90deg);
+            }
+
+            .conv-swap-btn:hover {
+                transform: rotate(270deg);
+            }
+
+            .conv-result-main {
+                font-size: 16px;
+            }
+
+            .conv-result-formula {
+                font-size: 11px;
+            }
+
+            .conv-quick-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            footer {
+                margin-top: 40px;
+                padding: 24px 16px;
+            }
+
+            .footer-logo {
+                font-size: 14px;
+            }
+
+            .footer-copy {
+                font-size: 10.5px;
+            }
+
+            .footer-links a {
+                font-size: 11.5px;
+            }
+
+            .toast {
+                font-size: 12px;
+                padding: 8px 14px;
+                border-radius: 7px;
+            }
+        }
+
+        /* ── Very small phones (≤ 380px) ── */
+        @media (max-width: 380px) {
+            main {
+                padding: 14px 6px;
+            }
+
+            .panel {
+                padding: 14px 12px;
+            }
+
+            .qty-row {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+
+            .viz-label {
+                grid-template-columns: 1fr;
+                gap: 6px;
+            }
+
+            .vlabel-div {
+                display: none;
+            }
+
+            .vlabel-section:last-child {
+                text-align: left;
+            }
+        }
     </style>
 </head>
 
@@ -527,35 +960,267 @@
             <div class="tips-title">Measuring Tips</div>
             <div class="tips-list" id="tips-list"></div>
         </div>
+        <div class="converter-panel">
+            <div class="conv-header">
+                <h3>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="17 1 21 5 17 9" />
+                        <path d="M3 11V9a4 4 0 0 1 4-4h14" />
+                        <polyline points="7 23 3 19 7 15" />
+                        <path d="M21 13v2a4 4 0 0 1-4 4H3" />
+                    </svg>
+                    Unit Converter
+                </h3>
+                <div class="conv-cat-chips">
+                    <button class="conv-cat-chip active" data-cat="weight"
+                        onclick="setConvCategory('weight')">Weight</button>
+                    <button class="conv-cat-chip" data-cat="volume" onclick="setConvCategory('volume')">Volume</button>
+                </div>
+            </div>
+
+            <div class="conv-body">
+                <div class="conv-col">
+                    <label>From</label>
+                    <input type="number" id="convert-value" value="1000" min="0" step="any">
+                    <select id="from-unit" style="margin-top:8px">
+                        <optgroup label="Weight">
+                            <option value="g" selected>Grams (g)</option>
+                            <option value="kg">Kilograms (kg)</option>
+                            <option value="oz">Ounces (oz)</option>
+                            <option value="lb">Pounds (lb)</option>
+                        </optgroup>
+                        <optgroup label="Volume">
+                            <option value="ml">Millilitres (ml)</option>
+                            <option value="l">Litres (l)</option>
+                            <option value="tsp">Teaspoons (tsp)</option>
+                            <option value="tbsp">Tablespoons (tbsp)</option>
+                            <option value="cup">Cups (cup)</option>
+                            <option value="fl_oz">Fluid Ounces (fl oz)</option>
+                        </optgroup>
+                    </select>
+                </div>
+
+                <div class="conv-swap-wrap">
+                    <button class="conv-swap-btn" onclick="swapConvUnits()" title="Swap units">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M7 16V4m0 0L3 8m4-4l4 4M17 8v12m0 0l4-4m-4 4l-4-4" />
+                        </svg>
+                    </button>
+                </div>
+
+                <div class="conv-col">
+                    <label>To</label>
+                    <input type="number" id="convert-result-value" readonly placeholder="—" tabindex="-1"
+                        style="background:#f8fafc;cursor:default">
+                    <select id="to-unit" style="margin-top:8px">
+                        <optgroup label="Weight">
+                            <option value="kg" selected>Kilograms (kg)</option>
+                            <option value="g">Grams (g)</option>
+                            <option value="oz">Ounces (oz)</option>
+                            <option value="lb">Pounds (lb)</option>
+                        </optgroup>
+                        <optgroup label="Volume">
+                            <option value="ml">Millilitres (ml)</option>
+                            <option value="l">Litres (l)</option>
+                            <option value="tsp">Teaspoons (tsp)</option>
+                            <option value="tbsp">Tablespoons (tbsp)</option>
+                            <option value="cup">Cups (cup)</option>
+                            <option value="fl_oz">Fluid Ounces (fl oz)</option>
+                        </optgroup>
+                    </select>
+                </div>
+            </div>
+
+            <div class="conv-result-card" id="conv-result-card"></div>
+
+            <div class="conv-quick">
+                <div class="conv-quick-title">Quick Conversions</div>
+                <div class="conv-quick-grid" id="conv-quick-grid"></div>
+            </div>
+        </div>
     </main>
 
     <footer>
         <div>
             <div class="footer-logo">VisualMeasure</div>
-            <div class="footer-copy">© 2024 VisualMeasure. All rights reserved.</div>
+            <div class="footer-copy">© 2026 VisualMeasure. All rights reserved.</div>
         </div>
-        <div class="footer-links"><a href="#">About</a><a href="#">Terms</a><a href="#">Privacy</a><a
-                href="#">Support</a></div>
+        <div class="footer-links">
+            <!-- <a href="#">About</a><a href="#">Terms</a><a href="#">Privacy</a><a
+                href="#">Support</a> -->
+            <a class="footer-copy" href="https://github.com/akshi009">© Akshi Jain.</a>
+        </div>
     </footer>
     <div class="toast" id="toast"></div>
 
     <script>
-        // ══════════════════════════════════════════════════════
-        // DATA
-        // ══════════════════════════════════════════════════════
+        /* ── Converter constants & logic ── */
+        const CONV_UNITS = {
+            weight: { g: 1, kg: 1000, oz: 28.3495, lb: 453.592 },
+            volume: { ml: 1, l: 1000, tsp: 5, tbsp: 15, cup: 240, fl_oz: 29.5735 },
+        };
+        const UNIT_LABELS = { g: 'g', kg: 'kg', oz: 'oz', lb: 'lb', ml: 'ml', l: 'L', tsp: 'tsp', tbsp: 'tbsp', cup: 'cup', fl_oz: 'fl oz' };
+        const UNIT_FULL = { g: 'Grams', kg: 'Kilograms', oz: 'Ounces', lb: 'Pounds', ml: 'Millilitres', l: 'Litres', tsp: 'Teaspoons', tbsp: 'Tablespoons', cup: 'Cups', fl_oz: 'Fluid Ounces' };
+
+        function getUnitCategory(u) {
+            if (CONV_UNITS.weight[u] !== undefined) return 'weight';
+            if (CONV_UNITS.volume[u] !== undefined) return 'volume';
+            return null;
+        }
+
+        const QUICK_REFS = {
+            weight: [
+                { from: 'g', to: 'kg', val: 1000 },
+                { from: 'kg', to: 'lb', val: 1 },
+                { from: 'oz', to: 'g', val: 1 },
+                { from: 'lb', to: 'kg', val: 1 },
+                { from: 'g', to: 'oz', val: 100 },
+                { from: 'kg', to: 'g', val: 2.5 },
+            ],
+            volume: [
+                { from: 'ml', to: 'l', val: 500 },
+                { from: 'cup', to: 'ml', val: 1 },
+                { from: 'tbsp', to: 'ml', val: 1 },
+                { from: 'tsp', to: 'ml', val: 1 },
+                { from: 'l', to: 'cup', val: 1 },
+                { from: 'fl_oz', to: 'ml', val: 1 },
+            ],
+        };
+
+        let convCategory = 'weight';
+
+        function setConvCategory(cat) {
+            convCategory = cat;
+            document.querySelectorAll('.conv-cat-chip').forEach(c => {
+                c.classList.toggle('active', c.dataset.cat === cat);
+            });
+            // Set default units for category
+            const fromEl = document.getElementById('from-unit');
+            const toEl = document.getElementById('to-unit');
+            if (cat === 'weight') {
+                fromEl.value = 'g'; toEl.value = 'kg';
+            } else {
+                fromEl.value = 'ml'; toEl.value = 'l';
+            }
+            convertUnits();
+            renderQuickRefs();
+        }
+
+        function swapConvUnits() {
+            const fromEl = document.getElementById('from-unit');
+            const toEl = document.getElementById('to-unit');
+            const resultValEl = document.getElementById('convert-result-value');
+            const inputEl = document.getElementById('convert-value');
+            const tmp = fromEl.value;
+            fromEl.value = toEl.value;
+            toEl.value = tmp;
+            // Put result value into input
+            if (resultValEl.value && !isNaN(parseFloat(resultValEl.value))) {
+                inputEl.value = parseFloat(resultValEl.value);
+            }
+            convertUnits();
+        }
+
+        function smartFormat(n) {
+            if (n === 0) return '0';
+            if (Math.abs(n) >= 1000) return n.toLocaleString('en-US', { maximumFractionDigits: 2 });
+            if (Math.abs(n) >= 1) return parseFloat(n.toFixed(4)).toString();
+            return parseFloat(n.toPrecision(4)).toString();
+        }
+
+        function convertUnits() {
+            const value = parseFloat(document.getElementById('convert-value').value);
+            const from = document.getElementById('from-unit').value;
+            const to = document.getElementById('to-unit').value;
+            const card = document.getElementById('conv-result-card');
+            const resultValEl = document.getElementById('convert-result-value');
+
+            const fromCat = getUnitCategory(from);
+            const toCat = getUnitCategory(to);
+
+            // Update category chips to match
+            if (fromCat && fromCat === toCat && fromCat !== convCategory) {
+                convCategory = fromCat;
+                document.querySelectorAll('.conv-cat-chip').forEach(c => {
+                    c.classList.toggle('active', c.dataset.cat === convCategory);
+                });
+                renderQuickRefs();
+            }
+
+            if (isNaN(value) || value < 0) {
+                card.innerHTML = `<div class="conv-result-error">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="m15 9-6 6M9 9l6 6"/></svg>
+                    Enter a valid number
+                </div>`;
+                resultValEl.value = '';
+                return;
+            }
+
+            if (fromCat !== toCat) {
+                card.innerHTML = `<div class="conv-result-error">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                    Can't convert ${UNIT_FULL[from] || from} (${fromCat}) → ${UNIT_FULL[to] || to} (${toCat})
+                </div>`;
+                resultValEl.value = '';
+                return;
+            }
+
+            const table = CONV_UNITS[fromCat];
+            const base = value * table[from];
+            const result = base / table[to];
+            const factor = table[from] / table[to];
+
+            resultValEl.value = smartFormat(result);
+
+            card.innerHTML = `
+                <div class="conv-result-main">
+                    <span>${smartFormat(value)} ${UNIT_LABELS[from]}</span>
+                    <span class="conv-equals">=</span>
+                    <span class="conv-result-val">${smartFormat(result)} ${UNIT_LABELS[to]}</span>
+                </div>
+                <div class="conv-result-formula">1 ${UNIT_LABELS[from]} = ${smartFormat(factor)} ${UNIT_LABELS[to]}  ·  1 ${UNIT_LABELS[to]} = ${smartFormat(1 / factor)} ${UNIT_LABELS[from]}</div>
+            `;
+        }
+
+        function renderQuickRefs() {
+            const grid = document.getElementById('conv-quick-grid');
+            const refs = QUICK_REFS[convCategory] || [];
+            grid.innerHTML = refs.map(r => {
+                const table = CONV_UNITS[getUnitCategory(r.from)];
+                const result = (r.val * table[r.from]) / table[r.to];
+                return `<div class="conv-quick-item" onclick="applyQuickRef('${r.from}','${r.to}',${r.val})">
+                    <span>${smartFormat(r.val)} ${UNIT_LABELS[r.from]}</span> = ${smartFormat(result)} ${UNIT_LABELS[r.to]}
+                </div>`;
+            }).join('');
+        }
+
+        function applyQuickRef(from, to, val) {
+            document.getElementById('from-unit').value = from;
+            document.getElementById('to-unit').value = to;
+            document.getElementById('convert-value').value = val;
+            convertUnits();
+        }
+
+        document.querySelectorAll('#convert-value,#from-unit,#to-unit')
+            .forEach(el => el.addEventListener('input', convertUnits));
+
+        convertUnits();
+        renderQuickRefs();
         const CONTAINERS = {
-            teaspoon: { label: 'Teaspoon', capacity: 5, unit: 'ml', shape: 'spoon', icon: '🥄' },
-            tablespoon: { label: 'Tablespoon', capacity: 15, unit: 'ml', shape: 'spoon', icon: '🥄' },
-            shotglass: { label: 'Shot Glass', capacity: 60, unit: 'ml', shape: 'shot', icon: '🥃' },
-            measuringcup: { label: 'Measuring Cup', capacity: 250, unit: 'ml', shape: 'mcup', icon: '🧪' },
-            glass: { label: 'Glass', capacity: 350, unit: 'ml', shape: 'glass', icon: '🥛' },
-            largeglass: { label: 'Large Glass', capacity: 600, unit: 'ml', shape: 'glass', icon: '🥛' },
-            mug: { label: 'Mug', capacity: 350, unit: 'ml', shape: 'mug', icon: '☕' },
-            bowl: { label: 'Bowl', capacity: 600, unit: 'ml', shape: 'bowl', icon: '🍜' },
-            largebowl: { label: 'Large Bowl', capacity: 1500, unit: 'ml', shape: 'bowl', icon: '🍲' },
-            bottle: { label: 'Bottle', capacity: 1000, unit: 'ml', shape: 'bottle', icon: '🍶' },
-            plate: { label: 'Plate', capacity: 500, unit: 'g', shape: 'plate', icon: '🍽️' },
-            smallplate: { label: 'Small Plate', capacity: 200, unit: 'g', shape: 'plate', icon: '🍽️' },
+            teaspoon: { label: 'Teaspoon', capacity: 5, unit: 'ml', shape: 'spoon' },
+            tablespoon: { label: 'Tablespoon', capacity: 15, unit: 'ml', shape: 'spoon' },
+            shotglass: { label: 'Shot Glass', capacity: 60, unit: 'ml', shape: 'shot' },
+            measuringcup: { label: 'Measuring Cup', capacity: 250, unit: 'ml', shape: 'mcup' },
+            glass: { label: 'Glass', capacity: 350, unit: 'ml', shape: 'glass' },
+            largeglass: { label: 'Large Glass', capacity: 600, unit: 'ml', shape: 'glass' },
+            mug: { label: 'Mug', capacity: 350, unit: 'ml', shape: 'mug' },
+            bowl: { label: 'Bowl', capacity: 600, unit: 'ml', shape: 'bowl' },
+            largebowl: { label: 'Large Bowl', capacity: 1500, unit: 'ml', shape: 'bowl' },
+            bottle: { label: 'Bottle', capacity: 1000, unit: 'ml', shape: 'bottle' },
+            plate: { label: 'Plate', capacity: 500, unit: 'g', shape: 'plate' },
+            smallplate: { label: 'Small Plate', capacity: 200, unit: 'g', shape: 'plate' },
         };
         const INGREDIENTS = {
             water: { type: 'liquid', color: '#87ceeb', rgb: [135, 206, 235], opacity: .82, containers: ['teaspoon', 'tablespoon', 'measuringcup', 'glass', 'largeglass', 'bottle'], defaultContainer: 'glass', conversions: { perCup: 240, perTbsp: 15 } },
@@ -600,10 +1265,16 @@
         }
         function autoSelectContainer(ingKey, normalized) {
             const ing = INGREDIENTS[ingKey] || INGREDIENTS.default;
-            const valid = ing.containers.filter(ck => CONTAINERS[ck].unit === normalized.baseUnit);
-            if (!valid.length) return ing.defaultContainer;
-            for (const ck of valid) { if (normalized.val <= CONTAINERS[ck].capacity * 1.05) return ck; }
-            return valid[valid.length - 1];
+
+            for (const ck of ing.containers) {
+                const cap = CONTAINERS[ck].capacity;
+
+                if (normalized.val <= cap * 1.05) {
+                    return ck;
+                }
+            }
+
+            return ing.containers[ing.containers.length - 1];
         }
 
         // ══════════════════════════════════════════════════════
@@ -621,16 +1292,25 @@
         let pourParticles = [];
         let streamActive = false, streamY = 0, streamTargetY = 0, streamTimer = 0;
 
+        let resizeTimer;
         function resizeCanvas() {
             const panel = document.getElementById('viz-panel');
-            cvs.width = panel.clientWidth * devicePixelRatio;
-            cvs.height = panel.clientHeight * devicePixelRatio;
-            cvs.style.width = panel.clientWidth + 'px';
-            cvs.style.height = panel.clientHeight + 'px';
+            const w = panel.clientWidth;
+            const h = panel.clientHeight;
+            cvs.width = w * devicePixelRatio;
+            cvs.height = 1000;
+            cvs.style.width = w + 'px';
+            cvs.style.height = h + 'px';
+            ctx.setTransform(1, 0, 0, 1, 0, 0);
             ctx.scale(devicePixelRatio, devicePixelRatio);
             if (state.hasResult) drawFrame();
         }
-        window.addEventListener('resize', resizeCanvas);
+        function debouncedResize() {
+            clearTimeout(resizeTimer);
+            resizeTimer = setTimeout(resizeCanvas, 80);
+        }
+        window.addEventListener('resize', debouncedResize);
+        window.addEventListener('orientationchange', () => setTimeout(resizeCanvas, 150));
 
         // ── Container shape geometry (returns path drawing function) ──
         // All shapes are drawn in a normalised box: cx=centrex, top=containerTop, w=containerWidth, h=containerHeight
@@ -772,8 +1452,10 @@
             const cont = CONTAINERS[state.containerKey];
             const [r, g, b] = ing.rgb;
 
-            // Container layout
-            const padX = 90, padTop = 50, padBot = 70;
+            // Container layout – responsive padding
+            const padX = W < 300 ? 40 : W < 500 ? 60 : 90;
+            const padTop = W < 300 ? 30 : 50;
+            const padBot = W < 300 ? 40 : 70;
             const cw = Math.min(W - padX * 2, 260);
             const ch = H - padTop - padBot;
             const cx = W / 2;
@@ -942,12 +1624,12 @@
             ctx.restore();
 
             // ── Container label top ──
-            ctx.save();
-            ctx.font = `600 13px 'Sora',sans-serif`;
-            ctx.fillStyle = 'rgba(255,255,255,0.55)';
-            ctx.textAlign = 'center';
-            ctx.fillText(cont.icon + ' ' + cont.label + ' (' + cont.capacity + (cont.unit === 'ml' ? 'ml' : 'g') + ')', cx, top - 16);
-            ctx.restore();
+            // ctx.save();
+            // ctx.font = `600 13px 'Sora',sans-serif`;
+            // ctx.fillStyle = 'rgba(255,255,255,0.55)';
+            // ctx.textAlign = 'center';
+            // ctx.fillText(cont.icon + ' ' + cont.label + ' (' + cont.capacity + (cont.unit === 'ml' ? 'ml' : 'g') + ')', cx, top - 16);
+            // ctx.restore();
         }
 
         // ── Animation loop ──
@@ -981,7 +1663,9 @@
             // calculate pixel bottomY for stream targeting
             const panel = document.getElementById('viz-panel');
             const W = panel.clientWidth, H = panel.clientHeight;
-            const padX = 90, padTop = 50, padBot = 70;
+            const padX = W < 300 ? 40 : W < 500 ? 60 : 90;
+            const padTop = W < 300 ? 30 : 50;
+            const padBot = W < 300 ? 40 : 70;
             const ch = H - padTop - padBot;
             const geomFull = getShapeGeom(cont.shape, W / 2, padTop, Math.min(W - padX * 2, 260), ch);
 
@@ -1043,18 +1727,42 @@
         function populateContainerChips(ingKey, normalized) {
             const ing = INGREDIENTS[ingKey] || INGREDIENTS.default;
             const wrap = document.getElementById('container-chips');
+
             wrap.innerHTML = '';
+
             ing.containers.forEach(ck => {
                 const c = CONTAINERS[ck];
+
+                let displayCapacity = c.capacity;
+                let displayUnit = normalized.baseUnit;
+
+                if (normalized.baseUnit === 'g') {
+                    displayCapacity = Math.round(c.capacity);
+                    displayUnit = 'g';
+                } else {
+                    displayCapacity = Math.round(c.capacity);
+                    displayUnit = 'ml';
+                }
+
                 const chip = document.createElement('button');
-                chip.className = 'c-chip' + (ck === state.containerKey ? ' active' : '');
-                chip.textContent = c.icon + ' ' + c.label + ' (' + c.capacity + (c.unit === 'ml' ? 'ml' : 'g') + ')';
+                chip.className =
+                    'c-chip' + (ck === state.containerKey ? ' active' : '');
+
+                chip.textContent =
+                    `${c.label} (${displayCapacity}${displayUnit})`;
+
                 chip.onclick = () => {
                     state.containerKey = ck;
-                    document.querySelectorAll('.c-chip').forEach(ch => ch.classList.remove('active'));
+
+                    document
+                        .querySelectorAll('.c-chip')
+                        .forEach(ch => ch.classList.remove('active'));
+
                     chip.classList.add('active');
+
                     if (state.hasResult) generate(true);
                 };
+
                 wrap.appendChild(chip);
             });
         }
@@ -1089,25 +1797,60 @@
         function fmt(n, dec = 1) { const r = parseFloat(n.toFixed(dec)); return Number.isInteger(r) ? String(r) : String(r); }
 
         function renderComparisons(ingKey, normalized, qty, unit) {
-            const row = document.getElementById('comp-row'); row.classList.remove('hidden');
+            const row = document.getElementById('comp-row');
+            row.classList.remove('hidden');
             const { val, baseUnit } = normalized;
             const ing = INGREDIENTS[ingKey] || INGREDIENTS.default;
             const cards = [];
-            if (baseUnit === 'ml') {
-                cards.push({ label: 'Teaspoons', val: fmt(val / 5), sub: '(5 ml each)' });
-                cards.push({ label: 'Tablespoons', val: fmt(val / 15), sub: '(15 ml each)' });
-                cards.push({ label: 'Cups', val: fmt(val / 240, 2), sub: '(240 ml each)' });
-                cards.push({ label: 'Litres', val: fmt(val / 1000, 3), sub: 'equivalent' });
-            } else if (baseUnit === 'g') {
-                if (ing.conversions.perCube) cards.push({ label: 'Cubes', val: fmt(val / ing.conversions.perCube), sub: '(~' + ing.conversions.perCube + 'g)' });
-                if (ing.conversions.perTbsp) cards.push({ label: 'Tablespoons', val: fmt(val / ing.conversions.perTbsp), sub: '(~' + ing.conversions.perTbsp + 'g)' });
-                if (ing.conversions.perCup) cards.push({ label: 'Cups', val: fmt(val / ing.conversions.perCup, 2), sub: 'approx' });
-                if (ing.conversions.perHandful) cards.push({ label: 'Handfuls', val: fmt(val / ing.conversions.perHandful), sub: '(~' + ing.conversions.perHandful + 'g)' });
-                cards.push({ label: 'Kilograms', val: fmt(val / 1000, 3), sub: 'equivalent' });
+
+            // Cups equivalent
+            if (ing.conversions.perCup) {
+                const cups = val / ing.conversions.perCup;
+                cards.push({ label: 'Cups', val: fmt(cups, 2), sub: `1 cup ≈ ${ing.conversions.perCup}${baseUnit}` });
             }
-            while (cards.length < 4 && cards.length > 0) cards.push({ label: 'Total', val: fmt(val), sub: baseUnit + ' exact' });
-            row.innerHTML = cards.slice(0, 4).map(c => `<div class="comp-card"><div class="comp-card-label">${c.label}</div><div class="comp-card-val">${c.val}</div><div class="comp-card-sub">${c.sub}</div></div>`).join('');
+
+            // Tablespoons
+            if (ing.conversions.perTbsp) {
+                const tbsp = val / ing.conversions.perTbsp;
+                cards.push({ label: 'Tablespoons', val: fmt(tbsp, 1), sub: `1 tbsp ≈ ${ing.conversions.perTbsp}${baseUnit}` });
+            }
+
+            // Teaspoons
+            if (ing.conversions.perTsp) {
+                const tsp = val / ing.conversions.perTsp;
+                cards.push({ label: 'Teaspoons', val: fmt(tsp, 1), sub: `1 tsp ≈ ${ing.conversions.perTsp}${baseUnit}` });
+            }
+
+            // Weight/volume conversion
+            if (baseUnit === 'ml') {
+                cards.push({ label: 'Litres', val: fmt(val / 1000, 3), sub: `${fmt(val, 0)} ml` });
+            } else if (baseUnit === 'g') {
+                cards.push({ label: 'Kilograms', val: fmt(val / 1000, 3), sub: `${fmt(val, 0)} g` });
+            }
+
+            // Handfuls
+            if (ing.conversions.perHandful) {
+                const handfuls = val / ing.conversions.perHandful;
+                cards.push({ label: 'Handfuls', val: fmt(handfuls, 1), sub: `1 handful ≈ ${ing.conversions.perHandful}g` });
+            }
+
+            // Cubes (e.g. paneer)
+            if (ing.conversions.perCube) {
+                const cubes = val / ing.conversions.perCube;
+                cards.push({ label: 'Cubes (≈1″)', val: fmt(cubes, 1), sub: `1 cube ≈ ${ing.conversions.perCube}g` });
+            }
+
+            // Limit to 4 cards
+            const display = cards.slice(0, 4);
+            row.innerHTML = display.map(c => `
+                <div class="comp-card">
+                    <div class="comp-card-label">${c.label}</div>
+                    <div class="comp-card-val">${c.val}</div>
+                    <div class="comp-card-sub">${c.sub}</div>
+                </div>
+            `).join('');
         }
+
 
         function renderTips(ingKey, normalized, qty, unit, containerKey, fillPct) {
             const panel = document.getElementById('tips-panel'), list = document.getElementById('tips-list');
