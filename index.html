@@ -1,0 +1,1150 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>VisualMeasure</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&family=DM+Sans:wght@300;400;500&display=swap"
+        rel="stylesheet" />
+    <style>
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0
+        }
+
+        :root {
+            --bg: #f7f8fa;
+            --white: #fff;
+            --navy: #0b1523;
+            --teal: #0d9488;
+            --teal-lt: #f0fdfa;
+            --blue: #2563eb;
+            --text: #0f172a;
+            --text2: #475569;
+            --text3: #94a3b8;
+            --border: #e2e8f0;
+            --border2: #cbd5e1;
+            --shadow: 0 1px 3px rgba(0, 0, 0, .07), 0 1px 2px rgba(0, 0, 0, .04);
+            --shadow2: 0 4px 20px rgba(0, 0, 0, .10);
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh
+        }
+
+        nav {
+            background: var(--white);
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            height: 58px;
+            display: flex;
+            align-items: center;
+            padding: 0 48px
+        }
+
+        .nav-logo {
+            font-family: 'Sora', sans-serif;
+            font-weight: 700;
+            font-size: 17px;
+            letter-spacing: -.03em
+        }
+
+        main {
+            max-width: 1080px;
+            margin: 0 auto;
+            padding: 36px 24px
+        }
+
+        .top-grid {
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 24px;
+            margin-bottom: 40px;
+            align-items: start
+        }
+
+        .panel {
+            background: var(--white);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 24px;
+            box-shadow: var(--shadow)
+        }
+
+        .panel h2 {
+            font-family: 'Sora', sans-serif;
+            font-size: 17px;
+            font-weight: 600;
+            letter-spacing: -.02em;
+            margin-bottom: 20px
+        }
+
+        .field {
+            margin-bottom: 14px
+        }
+
+        .label {
+            font-size: 11.5px;
+            font-weight: 500;
+            color: var(--text2);
+            margin-bottom: 5px;
+            display: block;
+            letter-spacing: .01em
+        }
+
+        .input-wrap {
+            position: relative
+        }
+
+        .input-icon {
+            position: absolute;
+            left: 11px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text3);
+            pointer-events: none
+        }
+
+        input,
+        select {
+            width: 100%;
+            padding: 9px 11px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 13.5px;
+            color: var(--text);
+            background: var(--white);
+            outline: none;
+            transition: .15s
+        }
+
+        input:focus,
+        select:focus {
+            border-color: var(--blue);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, .08)
+        }
+
+        .search-input {
+            padding-left: 32px
+        }
+
+        select {
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg width='10' height='6' viewBox='0 0 10 6' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%2394a3b8' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 11px center;
+            padding-right: 30px;
+            cursor: pointer
+        }
+
+        .qty-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 14px
+        }
+
+        .gen-btn {
+            width: 100%;
+            padding: 11px;
+            background: var(--text);
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+            font-family: 'Sora', sans-serif;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 7px;
+            transition: .2s;
+            margin-bottom: 12px;
+            letter-spacing: .01em
+        }
+
+        .gen-btn:hover {
+            background: #1e293b;
+            transform: translateY(-1px);
+            box-shadow: var(--shadow2)
+        }
+
+        .gen-btn:active {
+            transform: none
+        }
+
+        .container-chooser {
+            margin-bottom: 14px
+        }
+
+        .container-chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px
+        }
+
+        .c-chip {
+            font-size: 11px;
+            padding: 4px 10px;
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            cursor: pointer;
+            color: var(--text2);
+            background: var(--white);
+            transition: .15s;
+            font-family: 'DM Sans', sans-serif
+        }
+
+        .c-chip:hover {
+            border-color: var(--teal);
+            color: var(--teal)
+        }
+
+        .c-chip.active {
+            border-color: var(--teal);
+            background: var(--teal-lt);
+            color: var(--teal);
+            font-weight: 500
+        }
+
+        /* ── VIZ PANEL ── */
+        .viz-panel {
+            background: var(--navy);
+            border-radius: 14px;
+            overflow: hidden;
+            position: relative;
+            min-height: 460px;
+            display: flex;
+            flex-direction: column;
+            box-shadow: var(--shadow2)
+        }
+
+        #viz-canvas {
+            width: 100%;
+            flex: 1;
+            display: block;
+            cursor: default
+        }
+
+        /* placeholder */
+        .placeholder-state {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            color: rgba(255, 255, 255, .3);
+            pointer-events: none
+        }
+
+        .placeholder-state p {
+            font-size: 13px
+        }
+
+        /* info strip at bottom */
+        .viz-label {
+            /* position: absolute; */
+            /* bottom: 14px; */
+            /* left: 50%; */
+            /* transform: translateX(-50%); */
+            background: rgba(11, 21, 35, .85);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, .1);
+            border-radius: 10px;
+            padding: 10px 18px;
+            display: grid;
+            grid-template-columns: 1fr 1px 1fr;
+            gap: 14px;
+            align-items: center;
+            min-width: 200px;
+            white-space: nowrap;
+        }
+
+        .vlabel-tag {
+            font-size: 8px;
+            font-weight: 600;
+            letter-spacing: .1em;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, .4);
+            margin-bottom: 2px
+        }
+
+        .vlabel-val {
+            font-family: 'Sora', sans-serif;
+            font-size: 14px;
+            font-weight: 600;
+            color: #fff
+        }
+
+        .vlabel-div {
+            background: rgba(255, 255, 255, .15);
+            height: 28px
+        }
+
+        .vlabel-section:last-child {
+            text-align: right
+        }
+
+        /* comparison + tips */
+        .comp-row {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            margin-bottom: 18px
+        }
+
+        .comp-card {
+            background: var(--white);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 12px 14px;
+            box-shadow: var(--shadow)
+        }
+
+        .comp-card-label {
+            font-size: 10.5px;
+            color: var(--text3);
+            margin-bottom: 3px
+        }
+
+        .comp-card-val {
+            font-family: 'Sora', sans-serif;
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--text)
+        }
+
+        .comp-card-sub {
+            font-size: 11px;
+            color: var(--text2);
+            margin-top: 1px
+        }
+
+        .tips-panel {
+            background: var(--white);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 16px 18px;
+            box-shadow: var(--shadow);
+            margin-bottom: 44px
+        }
+
+        .tips-title {
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: .07em;
+            text-transform: uppercase;
+            color: var(--text3);
+            margin-bottom: 10px
+        }
+
+        .tips-list {
+            display: flex;
+            flex-direction: column;
+            gap: 7px
+        }
+
+        .tip-row {
+            display: flex;
+            align-items: flex-start;
+            gap: 9px;
+            font-size: 13px;
+            color: var(--text2)
+        }
+
+        .tip-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--teal);
+            flex-shrink: 0;
+            margin-top: 5px
+        }
+
+        .hidden {
+            display: none !important
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 22px;
+            left: 50%;
+            transform: translateX(-50%) translateY(60px);
+            background: var(--text);
+            color: #fff;
+            padding: 9px 18px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 500;
+            box-shadow: var(--shadow2);
+            transition: .3s;
+            z-index: 999;
+            pointer-events: none
+        }
+
+        .toast.show {
+            transform: translateX(-50%) translateY(0)
+        }
+
+        footer {
+            background: var(--navy);
+            color: #fff;
+            margin-top: 72px;
+            padding: 36px 48px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between
+        }
+
+        .footer-logo {
+            font-family: 'Sora', sans-serif;
+            font-weight: 700;
+            font-size: 15px;
+            margin-bottom: 3px
+        }
+
+        .footer-copy {
+            font-size: 11.5px;
+            color: rgba(255, 255, 255, .35)
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 22px
+        }
+
+        .footer-links a {
+            font-size: 12.5px;
+            color: rgba(255, 255, 255, .45);
+            text-decoration: none;
+            transition: .15s
+        }
+
+        .footer-links a:hover {
+            color: #fff
+        }
+    </style>
+</head>
+
+<body>
+    <nav>
+        <div style="display:flex;align-items:center"><span class="nav-logo">VisualMeasure</span></div>
+    </nav>
+    <main>
+        <div class="top-grid">
+            <div class="panel">
+                <h2>Measurement Setup</h2>
+                <div class="field">
+                    <label class="label">Item</label>
+                    <div class="input-wrap">
+                        <svg class="input-icon" width="14" height="14" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="11" cy="11" r="8" />
+                            <path d="m21 21-4.35-4.35" />
+                        </svg>
+                        <input class="search-input" type="text" id="item-input"
+                            placeholder="e.g., Milk, Rice, Water, Sugar…" />
+                    </div>
+                </div>
+                <div class="qty-row">
+                    <div>
+                        <label class="label">Quantity</label>
+                        <input type="number" id="qty-input" value="500" min="0.1" step="any" />
+                    </div>
+                    <div>
+                        <label class="label">Unit</label>
+                        <select id="unit-select">
+                            <optgroup label="Volume">
+                                <option value="ml" selected>ml</option>
+                                <option value="l">litre (l)</option>
+                                <option value="tsp">tsp (5ml)</option>
+                                <option value="tbsp">tbsp (15ml)</option>
+                                <option value="cup">cup (240ml)</option>
+                                <option value="fl_oz">fl oz</option>
+                            </optgroup>
+                            <optgroup label="Weight">
+                                <option value="g">g</option>
+                                <option value="kg">kg</option>
+                                <option value="oz">oz</option>
+                                <option value="lb">lb</option>
+                            </optgroup>
+                        </select>
+                    </div>
+                </div>
+                <div class="field container-chooser">
+                    <label class="label">Container</label>
+                    <div class="container-chips" id="container-chips"></div>
+                </div>
+                <button class="gen-btn" onclick="generate()">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <polygon points="5 3 19 12 5 21 5 3" />
+                    </svg>
+                    Generate Visualization
+                </button>
+            </div>
+
+            <div class="viz-panel" id="viz-panel">
+                <canvas id="viz-canvas"></canvas>
+                <div class="placeholder-state" id="placeholder">
+                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M8 2h8l-1 7H9L8 2z" />
+                        <path d="M9 9c0 5 3 8 3 8s3-3 3-8" />
+                    </svg>
+                    <p>Configure and click Generate</p>
+                </div>
+                <div class="viz-label" id="viz-label" style="display:none">
+                    <div class="vlabel-section">
+                        <div class="vlabel-tag">Measuring</div>
+                        <div class="vlabel-val" id="vlabel-item">—</div>
+                    </div>
+                    <div class="vlabel-div"></div>
+                    <div class="vlabel-section">
+                        <div class="vlabel-tag">Container</div>
+                        <div class="vlabel-val" id="vlabel-container">—</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="comp-row hidden" id="comp-row"></div>
+        <div class="tips-panel hidden" id="tips-panel">
+            <div class="tips-title">Measuring Tips</div>
+            <div class="tips-list" id="tips-list"></div>
+        </div>
+    </main>
+
+    <footer>
+        <div>
+            <div class="footer-logo">VisualMeasure</div>
+            <div class="footer-copy">© 2024 VisualMeasure. All rights reserved.</div>
+        </div>
+        <div class="footer-links"><a href="#">About</a><a href="#">Terms</a><a href="#">Privacy</a><a
+                href="#">Support</a></div>
+    </footer>
+    <div class="toast" id="toast"></div>
+
+    <script>
+        // ══════════════════════════════════════════════════════
+        // DATA
+        // ══════════════════════════════════════════════════════
+        const CONTAINERS = {
+            teaspoon: { label: 'Teaspoon', capacity: 5, unit: 'ml', shape: 'spoon', icon: '🥄' },
+            tablespoon: { label: 'Tablespoon', capacity: 15, unit: 'ml', shape: 'spoon', icon: '🥄' },
+            shotglass: { label: 'Shot Glass', capacity: 60, unit: 'ml', shape: 'shot', icon: '🥃' },
+            measuringcup: { label: 'Measuring Cup', capacity: 250, unit: 'ml', shape: 'mcup', icon: '🧪' },
+            glass: { label: 'Glass', capacity: 350, unit: 'ml', shape: 'glass', icon: '🥛' },
+            largeglass: { label: 'Large Glass', capacity: 600, unit: 'ml', shape: 'glass', icon: '🥛' },
+            mug: { label: 'Mug', capacity: 350, unit: 'ml', shape: 'mug', icon: '☕' },
+            bowl: { label: 'Bowl', capacity: 600, unit: 'ml', shape: 'bowl', icon: '🍜' },
+            largebowl: { label: 'Large Bowl', capacity: 1500, unit: 'ml', shape: 'bowl', icon: '🍲' },
+            bottle: { label: 'Bottle', capacity: 1000, unit: 'ml', shape: 'bottle', icon: '🍶' },
+            plate: { label: 'Plate', capacity: 500, unit: 'g', shape: 'plate', icon: '🍽️' },
+            smallplate: { label: 'Small Plate', capacity: 200, unit: 'g', shape: 'plate', icon: '🍽️' },
+        };
+        const INGREDIENTS = {
+            water: { type: 'liquid', color: '#87ceeb', rgb: [135, 206, 235], opacity: .82, containers: ['teaspoon', 'tablespoon', 'measuringcup', 'glass', 'largeglass', 'bottle'], defaultContainer: 'glass', conversions: { perCup: 240, perTbsp: 15 } },
+            milk: { type: 'liquid', color: '#f5f0e0', rgb: [245, 240, 224], opacity: .92, containers: ['teaspoon', 'tablespoon', 'measuringcup', 'glass', 'largeglass', 'bottle'], defaultContainer: 'glass', conversions: { perCup: 240, perTbsp: 15 } },
+            oil: { type: 'liquid', color: '#d4a017', rgb: [212, 160, 23], opacity: .88, containers: ['teaspoon', 'tablespoon', 'measuringcup', 'glass'], defaultContainer: 'tablespoon', conversions: { perTbsp: 14 } },
+            juice: { type: 'liquid', color: '#ff8c00', rgb: [255, 140, 0], opacity: .88, containers: ['measuringcup', 'glass', 'largeglass', 'bottle'], defaultContainer: 'glass', conversions: { perCup: 240 } },
+            coffee: { type: 'liquid', color: '#6b3a2a', rgb: [107, 58, 42], opacity: .94, containers: ['measuringcup', 'glass', 'mug'], defaultContainer: 'mug', conversions: { perCup: 240 } },
+            tea: { type: 'liquid', color: '#b5651d', rgb: [181, 101, 29], opacity: .88, containers: ['measuringcup', 'glass', 'mug'], defaultContainer: 'mug', conversions: { perCup: 240 } },
+            rice: { type: 'solid', color: '#f5f0d0', rgb: [245, 240, 208], opacity: 1, containers: ['measuringcup', 'bowl', 'plate'], defaultContainer: 'measuringcup', conversions: { perCup: 185, perTbsp: 12 } },
+            flour: { type: 'solid', color: '#faf6ee', rgb: [250, 246, 238], opacity: 1, containers: ['measuringcup', 'bowl', 'plate'], defaultContainer: 'measuringcup', conversions: { perCup: 125, perTbsp: 8 } },
+            sugar: { type: 'solid', color: '#fffef0', rgb: [255, 254, 240], opacity: 1, containers: ['teaspoon', 'tablespoon', 'measuringcup', 'bowl'], defaultContainer: 'measuringcup', conversions: { perCup: 200, perTbsp: 12, perTsp: 4 } },
+            salt: { type: 'solid', color: '#eef0f8', rgb: [238, 240, 248], opacity: 1, containers: ['teaspoon', 'tablespoon', 'measuringcup'], defaultContainer: 'teaspoon', conversions: { perTsp: 6, perTbsp: 18 } },
+            paneer: { type: 'solid', color: '#fffde0', rgb: [255, 253, 224], opacity: 1, containers: ['smallplate', 'plate', 'bowl'], defaultContainer: 'plate', conversions: { perCube: 30 } },
+            butter: { type: 'solid', color: '#fad16a', rgb: [250, 209, 106], opacity: 1, containers: ['teaspoon', 'tablespoon', 'smallplate'], defaultContainer: 'tablespoon', conversions: { perTbsp: 14, perTsp: 4.7 } },
+            almonds: { type: 'solid', color: '#c8956c', rgb: [200, 149, 108], opacity: 1, containers: ['smallplate', 'plate', 'bowl'], defaultContainer: 'smallplate', conversions: { perHandful: 30 } },
+            oats: { type: 'solid', color: '#d4b896', rgb: [212, 184, 150], opacity: 1, containers: ['measuringcup', 'bowl'], defaultContainer: 'measuringcup', conversions: { perCup: 90 } },
+            default: { type: 'liquid', color: '#88aacc', rgb: [136, 170, 204], opacity: .82, containers: ['teaspoon', 'tablespoon', 'measuringcup', 'glass', 'bowl', 'plate'], defaultContainer: 'glass', conversions: {} },
+        };
+        const TO_ML = { ml: 1, l: 1000, tsp: 5, tbsp: 15, cup: 240, fl_oz: 29.5735 };
+        const TO_G = { g: 1, kg: 1000, oz: 28.3495, lb: 453.592 };
+
+        function normalizeAmount(qty, unit) {
+            if (TO_ML[unit]) return { val: qty * TO_ML[unit], baseUnit: 'ml' };
+            if (TO_G[unit]) return { val: qty * TO_G[unit], baseUnit: 'g' };
+            return { val: qty, baseUnit: unit };
+        }
+        function matchIngredient(name) {
+            const n = name.toLowerCase().trim();
+            const aliases = {
+                water: ['water', 'pani', 'h2o'], milk: ['milk', 'doodh', 'almond milk', 'oat milk'],
+                oil: ['oil', 'tel', 'olive oil', 'sunflower oil', 'coconut oil', 'mustard oil', 'ghee'],
+                juice: ['juice', 'nimbu pani'], coffee: ['coffee', 'espresso', 'cappuccino'],
+                tea: ['tea', 'chai'], rice: ['rice', 'chawal', 'basmati'],
+                flour: ['flour', 'atta', 'maida', 'wheat'], sugar: ['sugar', 'cheeni', 'shakkar'],
+                salt: ['salt', 'namak'], paneer: ['paneer', 'cottage cheese', 'chenna'],
+                butter: ['butter', 'makhan'], almonds: ['almond', 'badam'], oats: ['oat', 'oats', 'porridge'],
+            };
+            for (const [key, list] of Object.entries(aliases)) {
+                if (list.some(a => n.includes(a) || a.includes(n))) return key;
+            }
+            return 'default';
+        }
+        function autoSelectContainer(ingKey, normalized) {
+            const ing = INGREDIENTS[ingKey] || INGREDIENTS.default;
+            const valid = ing.containers.filter(ck => CONTAINERS[ck].unit === normalized.baseUnit);
+            if (!valid.length) return ing.defaultContainer;
+            for (const ck of valid) { if (normalized.val <= CONTAINERS[ck].capacity * 1.05) return ck; }
+            return valid[valid.length - 1];
+        }
+
+        // ══════════════════════════════════════════════════════
+        // STATE
+        // ══════════════════════════════════════════════════════
+        let state = { item: 'Milk', qty: 500, unit: 'ml', ingKey: 'milk', containerKey: 'glass', fillPct: 0, hasResult: false };
+
+        // ══════════════════════════════════════════════════════
+        // CANVAS 2D RENDERER
+        // ══════════════════════════════════════════════════════
+        const cvs = document.getElementById('viz-canvas');
+        const ctx = cvs.getContext('2d');
+        let animFill = 0, targetFill = 0, animRAF = null, isAnimating = false;
+        let waveOffset = 0;
+        let pourParticles = [];
+        let streamActive = false, streamY = 0, streamTargetY = 0, streamTimer = 0;
+
+        function resizeCanvas() {
+            const panel = document.getElementById('viz-panel');
+            cvs.width = panel.clientWidth * devicePixelRatio;
+            cvs.height = panel.clientHeight * devicePixelRatio;
+            cvs.style.width = panel.clientWidth + 'px';
+            cvs.style.height = panel.clientHeight + 'px';
+            ctx.scale(devicePixelRatio, devicePixelRatio);
+            if (state.hasResult) drawFrame();
+        }
+        window.addEventListener('resize', resizeCanvas);
+
+        // ── Container shape geometry (returns path drawing function) ──
+        // All shapes are drawn in a normalised box: cx=centrex, top=containerTop, w=containerWidth, h=containerHeight
+        // Returns {drawOuter, drawInner, getInnerX(normalised_y_0to1)→{left,right} }
+        function getShapeGeom(shape, cx, top, cw, ch) {
+            const b = top + ch; // bottom y
+            const t = top;    // top y
+            switch (shape) {
+                case 'glass': case 'shot': {
+                    // Trapezoid: narrower at bottom, wider at top
+                    const bw = cw * 0.62, tw = cw; // bottom width, top width
+                    const bx0 = cx - bw / 2, bx1 = cx + bw / 2, tx0 = cx - tw / 2, tx1 = cx + tw / 2;
+                    return {
+                        drawOuter: (ctx) => { ctx.beginPath(); ctx.moveTo(tx0, t); ctx.lineTo(tx1, t); ctx.lineTo(bx1, b); ctx.lineTo(bx0, b); ctx.closePath(); },
+                        getInnerX: (fy) => {// fy=0 at bottom,1 at top
+                            const lx = bx0 + (tx0 - bx0) * fy, rx = bx1 + (tx1 - bx1) * fy;
+                            return { left: lx + 3, right: rx - 3 };
+                        },
+                        bottomY: b, topY: t,
+                    };
+                }
+                case 'mug': {
+                    const mw = cw * 0.88;
+                    const mx0 = cx - mw / 2, mx1 = cx + mw / 2;
+                    return {
+                        drawOuter: (ctx) => {
+                            ctx.beginPath(); ctx.moveTo(mx0, t); ctx.lineTo(mx1, t); ctx.lineTo(mx1, b); ctx.lineTo(mx0, b); ctx.closePath();
+                            // handle
+                            ctx.moveTo(mx1, t + ch * 0.2); ctx.bezierCurveTo(mx1 + cw * 0.35, t + ch * 0.2, mx1 + cw * 0.35, t + ch * 0.65, mx1, t + ch * 0.65);
+                        },
+                        getInnerX: (fy) => ({ left: mx0 + 3, right: mx1 - 3 }),
+                        bottomY: b, topY: t,
+                    };
+                }
+                case 'bowl': {
+                    // Elliptical cross-section bowl
+                    const bw = cw, tw = cw * 0.7;
+                    return {
+                        drawOuter: (ctx) => {
+                            ctx.beginPath();
+                            // left side arc
+                            ctx.moveTo(cx - tw / 2, t);
+                            ctx.bezierCurveTo(cx - bw / 2, t + ch * 0.2, cx - bw / 2, t + ch * 0.85, cx - bw * 0.15, b);
+                            ctx.lineTo(cx + bw * 0.15, b);
+                            ctx.bezierCurveTo(cx + bw / 2, t + ch * 0.85, cx + bw / 2, t + ch * 0.2, cx + tw / 2, t);
+                            ctx.closePath();
+                        },
+                        getInnerX: (fy) => {
+                            // fy=0 bottom,1 top
+                            const halfW = (tw / 2) * fy + (bw * 0.12) * (1 - fy) + ((bw / 2 - bw * 0.12) * Math.sin(fy * Math.PI * 0.7));
+                            return { left: cx - halfW + 3, right: cx + halfW - 3 };
+                        },
+                        bottomY: b, topY: t,
+                    };
+                }
+                case 'bottle': {
+                    const neckW = cw * 0.28, bodyW = cw * 0.85;
+                    const neckH = ch * 0.3;
+                    return {
+                        drawOuter: (ctx) => {
+                            ctx.beginPath();
+                            ctx.moveTo(cx - neckW / 2, t);
+                            ctx.lineTo(cx + neckW / 2, t);
+                            ctx.bezierCurveTo(cx + neckW / 2, t + neckH, cx + bodyW / 2, t + neckH * 1.4, cx + bodyW / 2, t + neckH * 1.8);
+                            ctx.lineTo(cx + bodyW / 2, b);
+                            ctx.lineTo(cx - bodyW / 2, b);
+                            ctx.lineTo(cx - bodyW / 2, t + neckH * 1.8);
+                            ctx.bezierCurveTo(cx - bodyW / 2, t + neckH * 1.4, cx - neckW / 2, t + neckH, cx - neckW / 2, t);
+                            ctx.closePath();
+                        },
+                        getInnerX: (fy) => {
+                            // fy=0 bottom,1 top
+                            const bodyFill = Math.min(fy / 0.7, 1); // body portion
+                            const neckFill = Math.max((fy - 0.7) / 0.3, 0);
+                            const hw = bodyW / 2 * (1 - neckFill) + neckW / 2 * neckFill;
+                            return { left: cx - hw + 3, right: cx + hw - 3 };
+                        },
+                        bottomY: b, topY: t,
+                    };
+                }
+                case 'mcup': {
+                    // Measuring cup: slight taper
+                    const bw = cw * 0.7, tw = cw * 0.85;
+                    const bx0 = cx - bw / 2, bx1 = cx + bw / 2, tx0 = cx - tw / 2, tx1 = cx + tw / 2;
+                    // spout
+                    return {
+                        drawOuter: (ctx) => {
+                            ctx.beginPath(); ctx.moveTo(tx0, t); ctx.lineTo(tx1, t);
+                            // small spout
+                            ctx.lineTo(tx1 + cw * 0.1, t - ch * 0.06); ctx.lineTo(tx1 + cw * 0.1, t);
+                            ctx.lineTo(bx1, b); ctx.lineTo(bx0, b); ctx.closePath();
+                        },
+                        getInnerX: (fy) => {
+                            const lx = bx0 + (tx0 - bx0) * fy, rx = bx1 + (tx1 - bx1) * fy;
+                            return { left: lx + 3, right: rx - 3 };
+                        },
+                        bottomY: b, topY: t,
+                    };
+                }
+                case 'plate': {
+                    const pw = cw, ph = ch;
+                    return {
+                        drawOuter: (ctx) => {
+                            ctx.beginPath();
+                            ctx.ellipse(cx, b, pw / 2, ph * 0.18, 0, Math.PI, 0);
+                            ctx.lineTo(cx + pw / 2, b);
+                            ctx.closePath();
+                        },
+                        getInnerX: (fy) => ({ left: cx - pw * 0.42 + 3, right: cx + pw * 0.42 - 3 }),
+                        bottomY: b, topY: b - ph * 0.18,
+                    };
+                }
+                case 'spoon': {
+                    const sw = cw * 0.65;
+                    return {
+                        drawOuter: (ctx) => {
+                            ctx.beginPath();
+                            ctx.ellipse(cx, b - ch * 0.3, sw / 2, ch * 0.35, 0, 0, Math.PI * 2);
+                        },
+                        getInnerX: (fy) => {
+                            const r = sw / 2 * (1 - Math.pow(fy - 0.5, 2) * 1.5);
+                            return { left: cx - r + 2, right: cx + r - 2 };
+                        },
+                        bottomY: b - ch * 0.3 + ch * 0.32, topY: b - ch * 0.3 - ch * 0.32,
+                    };
+                }
+                default: return getShapeGeom('glass', cx, top, cw, ch);
+            }
+        }
+
+        // ── Main draw function ──
+        function drawFrame() {
+            if (!state.hasResult) return;
+            const W = cvs.width / devicePixelRatio;
+            const H = cvs.height / devicePixelRatio;
+            ctx.clearRect(0, 0, W, H);
+
+            const ing = INGREDIENTS[state.ingKey] || INGREDIENTS.default;
+            const cont = CONTAINERS[state.containerKey];
+            const [r, g, b] = ing.rgb;
+
+            // Container layout
+            const padX = 90, padTop = 50, padBot = 70;
+            const cw = Math.min(W - padX * 2, 260);
+            const ch = H - padTop - padBot;
+            const cx = W / 2;
+            const top = padTop;
+
+            const geom = getShapeGeom(cont.shape, cx, top, cw, ch);
+
+            // ── Draw measurement tick marks on the right side ──
+            const tickCount = 5;
+            ctx.save();
+            ctx.font = `500 11px 'DM Sans',sans-serif`;
+            ctx.textAlign = 'left';
+            ctx.fillStyle = 'rgba(255,255,255,0.45)';
+            ctx.strokeStyle = 'rgba(255,255,255,0.2)';
+            ctx.lineWidth = 1;
+            for (let i = 0; i <= tickCount; i++) {
+                const fy = i / tickCount; // 0=bottom,1=top
+                const pctLabel = Math.round(fy * 100);
+                const capLabel = Math.round(fy * cont.capacity) + (cont.unit === 'ml' ? 'ml' : 'g');
+                // y position: fy=0→geom.bottomY, fy=1→geom.topY
+                const ypos = geom.bottomY + (geom.topY - geom.bottomY) * fy;
+                const innerX = geom.getInnerX(fy);
+                // tick line
+                ctx.beginPath();
+                ctx.moveTo(innerX.right + 2, ypos);
+                ctx.lineTo(innerX.right + 14, ypos);
+                ctx.stroke();
+                ctx.fillText(capLabel, innerX.right + 17, ypos + 4);
+            }
+            // current fill line + label
+            if (animFill > 0.01) {
+                const fillFy = Math.min(animFill, 0.97);
+                const fillYpos = geom.bottomY + (geom.topY - geom.bottomY) * fillFy;
+                const fillInner = geom.getInnerX(fillFy);
+                ctx.strokeStyle = `rgba(${r},${g},${b},0.9)`;
+                ctx.lineWidth = 2;
+                ctx.setLineDash([6, 3]);
+                ctx.beginPath();
+                ctx.moveTo(fillInner.left - 20, fillYpos);
+                ctx.lineTo(fillInner.right + 20, fillYpos);
+                ctx.stroke();
+                ctx.setLineDash([]);
+                // fill label on left
+                ctx.fillStyle = `rgba(${r},${g},${b},1)`;
+                ctx.font = `700 13px 'Sora',sans-serif`;
+                ctx.textAlign = 'right';
+                const pctNow = Math.round(animFill * 100);
+                const capNow = Math.round(animFill * cont.capacity) + (cont.unit === 'ml' ? 'ml' : 'g');
+                ctx.fillText(`${capNow} · ${pctNow}%`, fillInner.left - 24, fillYpos + 4);
+            }
+            ctx.restore();
+
+            // ── Clip region = container interior ──
+            ctx.save();
+            geom.drawOuter(ctx);
+            ctx.clip();
+
+            // Background inside container (dark tinted)
+            ctx.fillStyle = 'rgba(15,25,45,0.92)';
+            ctx.fillRect(0, 0, W, H);
+
+            // ── Liquid fill ──
+            if (animFill > 0.005) {
+                const fillFy = Math.min(animFill, 0.97);
+                const fillYpos = geom.bottomY + (geom.topY - geom.bottomY) * fillFy;
+                const isLiquid = ing.type === 'liquid';
+
+                if (isLiquid) {
+                    // Main liquid body
+                    const grad = ctx.createLinearGradient(cx - cw / 2, fillYpos, cx + cw / 2, fillYpos);
+                    grad.addColorStop(0, `rgba(${r},${g},${b},${ing.opacity * 0.7})`);
+                    grad.addColorStop(0.4, `rgba(${r},${g},${b},${ing.opacity})`);
+                    grad.addColorStop(1, `rgba(${r},${g},${b},${ing.opacity * 0.85})`);
+                    ctx.fillStyle = grad;
+                    ctx.fillRect(0, fillYpos, W, H);
+
+                    // Wave on top surface
+                    ctx.beginPath();
+                    ctx.moveTo(0, fillYpos);
+                    const waveAmp = isAnimating ? 1.5 : 3;
+                    for (let x = 0; x <= W; x += 4) {
+                        const wy = fillYpos + Math.sin((x * 0.035) + waveOffset) * waveAmp + Math.sin((x * 0.06) + waveOffset * 1.3) * waveAmp * 0.4;
+                        ctx.lineTo(x, wy);
+                    }
+                    ctx.lineTo(W, H); ctx.lineTo(0, H); ctx.closePath();
+                    const waveGrad = ctx.createLinearGradient(0, fillYpos - 10, 0, fillYpos + 20);
+                    waveGrad.addColorStop(0, `rgba(${Math.min(r + 40, 255)},${Math.min(g + 40, 255)},${Math.min(b + 40, 255)},0.7)`);
+                    waveGrad.addColorStop(1, `rgba(${r},${g},${b},${ing.opacity})`);
+                    ctx.fillStyle = waveGrad;
+                    ctx.fill();
+
+                    // Specular sheen
+                    const sheen = ctx.createLinearGradient(cx - cw * 0.4, fillYpos, cx - cw * 0.1, geom.bottomY);
+                    sheen.addColorStop(0, 'rgba(255,255,255,0.12)');
+                    sheen.addColorStop(1, 'rgba(255,255,255,0)');
+                    ctx.fillStyle = sheen;
+                    ctx.fillRect(0, fillYpos, W, H);
+                } else {
+                    // Solid: flat fill with texture dots
+                    const baseColor = `rgba(${r},${g},${b},0.95)`;
+                    ctx.fillStyle = baseColor;
+                    ctx.fillRect(0, fillYpos, W, H);
+                    // grain texture
+                    ctx.fillStyle = `rgba(${Math.max(r - 30, 0)},${Math.max(g - 30, 0)},${Math.max(b - 30, 0)},0.4)`;
+                    const seed = 42;
+                    for (let i = 0; i < 180; i++) {
+                        const gx = cx - cw / 2 + ((i * 73 + seed) % cw);
+                        const gy = fillYpos + ((i * 47 + seed) % (geom.bottomY - fillYpos + 1));
+                        const gs = 1 + ((i * 31) % 3) * 0.7;
+                        ctx.beginPath(); ctx.arc(gx, gy, gs, 0, Math.PI * 2); ctx.fill();
+                    }
+                    // top surface line
+                    ctx.fillStyle = `rgba(${Math.min(r + 50, 255)},${Math.min(g + 50, 255)},${Math.min(b + 50, 255)},0.6)`;
+                    ctx.fillRect(0, fillYpos, W, 4);
+                }
+            }
+
+            // ── Pour particles (inside clip) ──
+            for (const p of pourParticles) {
+                ctx.globalAlpha = p.alpha;
+                if (ing.type === 'liquid') {
+                    ctx.fillStyle = `rgba(${r},${g},${b},0.9)`;
+                    ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2); ctx.fill();
+                } else {
+                    ctx.fillStyle = `rgba(${r},${g},${b},0.95)`;
+                    ctx.save(); ctx.translate(p.x, p.y); ctx.rotate(p.rot);
+                    ctx.fillRect(-p.r * 1.5, -p.r * 0.6, p.r * 3, p.r * 1.2);
+                    ctx.restore();
+                }
+                ctx.globalAlpha = 1;
+            }
+
+            // ── Pour stream (inside clip) ──
+            if (streamActive) {
+                const sw = ing.type === 'liquid' ? 6 : 8;
+                if (ing.type === 'liquid') {
+                    const sg = ctx.createLinearGradient(cx, top - 30, cx, streamY);
+                    sg.addColorStop(0, `rgba(${r},${g},${b},0)`);
+                    sg.addColorStop(0.4, `rgba(${r},${g},${b},0.7)`);
+                    sg.addColorStop(1, `rgba(${r},${g},${b},0.5)`);
+                    ctx.fillStyle = sg;
+                    ctx.fillRect(cx - sw / 2, top - 30, sw, streamY - (top - 30));
+                } else {
+                    // grain stream: dots
+                    ctx.fillStyle = `rgba(${r},${g},${b},0.85)`;
+                    for (let sy = top; sy < streamY; sy += 8) {
+                        const ox = (Math.sin(sy * 0.3 + streamTimer) * sw);
+                        ctx.beginPath(); ctx.arc(cx + ox, sy, 2.5, 0, Math.PI * 2); ctx.fill();
+                    }
+                }
+            }
+
+            ctx.restore(); // end clip
+
+            // ── Container outline (drawn on top) ──
+            ctx.save();
+            ctx.lineWidth = 2.5;
+            ctx.strokeStyle = 'rgba(180,210,230,0.55)';
+            geom.drawOuter(ctx);
+            ctx.stroke();
+            // rim highlight top
+            ctx.strokeStyle = 'rgba(220,240,255,0.35)';
+            ctx.lineWidth = 1;
+            geom.drawOuter(ctx);
+            ctx.stroke();
+            ctx.restore();
+
+            // ── Container label top ──
+            ctx.save();
+            ctx.font = `600 13px 'Sora',sans-serif`;
+            ctx.fillStyle = 'rgba(255,255,255,0.55)';
+            ctx.textAlign = 'center';
+            ctx.fillText(cont.icon + ' ' + cont.label + ' (' + cont.capacity + (cont.unit === 'ml' ? 'ml' : 'g') + ')', cx, top - 16);
+            ctx.restore();
+        }
+
+        // ── Animation loop ──
+        let lastT = 0;
+        function loop(t) {
+            requestAnimationFrame(loop);
+            const dt = Math.min(t - lastT, 50); lastT = t;
+            waveOffset += dt * 0.002;
+            streamTimer += dt * 0.01;
+
+            // Update particles
+            pourParticles = pourParticles.filter(p => {
+                p.y += p.vy; p.vy += 0.4; p.x += p.vx; p.alpha -= dt * 0.0014;
+                p.rot += p.rotV;
+                return p.alpha > 0 && p.y < (cvs.height / devicePixelRatio + 20);
+            });
+
+            if (state.hasResult) drawFrame();
+        }
+        requestAnimationFrame(loop);
+
+        // ── Fill animation ──
+        function startFillAnim(target) {
+            if (animRAF) cancelAnimationFrame(animRAF);
+            isAnimating = true;
+            animFill = 0;
+            const DURATION = 1800;
+            const startT = performance.now();
+            const cont = CONTAINERS[state.containerKey];
+            const geomBot = getShapeGeom(cont.shape, 0, 0, 1, 1).bottomY; // normalised, unused
+            // calculate pixel bottomY for stream targeting
+            const panel = document.getElementById('viz-panel');
+            const W = panel.clientWidth, H = panel.clientHeight;
+            const padX = 90, padTop = 50, padBot = 70;
+            const ch = H - padTop - padBot;
+            const geomFull = getShapeGeom(cont.shape, W / 2, padTop, Math.min(W - padX * 2, 260), ch);
+
+            // Spawn particles + stream
+            spawnPour(target, geomFull, W, H);
+
+            function step(now) {
+                const p = Math.min((now - startT) / DURATION, 1);
+                const ease = 1 - Math.pow(1 - p, 3);
+                animFill = ease * target;
+                // update stream target
+                const fy = Math.min(animFill, 0.97);
+                streamY = geomFull.bottomY + (geomFull.topY - geomFull.bottomY) * fy;
+                // update fill bar
+                const pct = Math.min(animFill * 100, 100);
+                document.getElementById('fill-bar') && (document.getElementById('fill-bar').style.height = pct + '%');
+                if (p < 1) {
+                    animRAF = requestAnimationFrame(step);
+                } else {
+                    animFill = target; isAnimating = false;
+                    streamActive = false;
+                    setTimeout(() => { pourParticles = []; }, 600);
+                }
+            }
+            animRAF = requestAnimationFrame(step);
+        }
+
+        function spawnPour(fillTarget, geomFull, W, H) {
+            const ing = INGREDIENTS[state.ingKey] || INGREDIENTS.default;
+            streamActive = true;
+            streamY = geomFull.topY; // start at top, will animate down as fill rises
+            const count = ing.type === 'liquid' ? 35 : 55;
+            const cx = W / 2;
+            for (let i = 0; i < count; i++) {
+                const delay = i / count * 1400;
+                setTimeout(() => {
+                    if (!isAnimating && i > 5) return;
+                    pourParticles.push({
+                        x: cx + (Math.random() - 0.5) * 14,
+                        y: geomFull.topY - 20,
+                        vx: (Math.random() - 0.5) * 2.5,
+                        vy: Math.random() * 3 + 1,
+                        r: ing.type === 'liquid' ? 2 + Math.random() * 4 : 2.5 + Math.random() * 3,
+                        alpha: 0.9 + Math.random() * 0.1,
+                        rot: Math.random() * Math.PI * 2,
+                        rotV: (Math.random() - 0.5) * 0.2,
+                    });
+                }, delay);
+            }
+            // Kill stream after fill animation
+            setTimeout(() => { streamActive = false; }, 1900);
+        }
+
+        // ══════════════════════════════════════════════════════
+        // UI
+        // ══════════════════════════════════════════════════════
+        function showToast(msg) { const t = document.getElementById('toast'); t.textContent = msg; t.classList.add('show'); setTimeout(() => t.classList.remove('show'), 2200); }
+
+        function populateContainerChips(ingKey, normalized) {
+            const ing = INGREDIENTS[ingKey] || INGREDIENTS.default;
+            const wrap = document.getElementById('container-chips');
+            wrap.innerHTML = '';
+            ing.containers.forEach(ck => {
+                const c = CONTAINERS[ck];
+                const chip = document.createElement('button');
+                chip.className = 'c-chip' + (ck === state.containerKey ? ' active' : '');
+                chip.textContent = c.icon + ' ' + c.label + ' (' + c.capacity + (c.unit === 'ml' ? 'ml' : 'g') + ')';
+                chip.onclick = () => {
+                    state.containerKey = ck;
+                    document.querySelectorAll('.c-chip').forEach(ch => ch.classList.remove('active'));
+                    chip.classList.add('active');
+                    if (state.hasResult) generate(true);
+                };
+                wrap.appendChild(chip);
+            });
+        }
+
+        function generate(skipAutoContainer = false) {
+            const item = document.getElementById('item-input').value.trim();
+            const qty = parseFloat(document.getElementById('qty-input').value);
+            const unit = document.getElementById('unit-select').value;
+            if (!item) { showToast('Please enter an item name'); return; }
+            if (!qty || qty <= 0) { showToast('Enter a valid quantity'); return; }
+            const ingKey = matchIngredient(item);
+            const normalized = normalizeAmount(qty, unit);
+            if (!skipAutoContainer) state.containerKey = autoSelectContainer(ingKey, normalized);
+            state.item = item; state.qty = qty; state.unit = unit; state.ingKey = ingKey;
+            const cont = CONTAINERS[state.containerKey];
+            const fillPct = Math.min(normalized.val / cont.capacity, 1.0);
+            state.fillPct = fillPct;
+            state.hasResult = true;
+            populateContainerChips(ingKey, normalized);
+            document.getElementById('placeholder').style.display = 'none';
+            const unitLabels = { ml: 'ml', l: 'L', tsp: 'tsp', tbsp: 'tbsp', cup: 'cup', fl_oz: 'fl oz', g: 'g', kg: 'kg', oz: 'oz', lb: 'lb' };
+            document.getElementById('vlabel-item').textContent = qty + ' ' + (unitLabels[unit] || unit) + ' ' + capitalize(item);
+            document.getElementById('vlabel-container').textContent = cont.label + ' (' + cont.capacity + (cont.unit === 'ml' ? 'ml' : 'g') + ')';
+            document.getElementById('viz-label').style.display = 'grid';
+            resizeCanvas();
+            startFillAnim(fillPct);
+            renderComparisons(ingKey, normalized, qty, unit);
+            renderTips(ingKey, normalized, qty, unit, state.containerKey, fillPct);
+        }
+
+        function capitalize(s) { return s ? s.charAt(0).toUpperCase() + s.slice(1) : ''; }
+        function fmt(n, dec = 1) { const r = parseFloat(n.toFixed(dec)); return Number.isInteger(r) ? String(r) : String(r); }
+
+        function renderComparisons(ingKey, normalized, qty, unit) {
+            const row = document.getElementById('comp-row'); row.classList.remove('hidden');
+            const { val, baseUnit } = normalized;
+            const ing = INGREDIENTS[ingKey] || INGREDIENTS.default;
+            const cards = [];
+            if (baseUnit === 'ml') {
+                cards.push({ label: 'Teaspoons', val: fmt(val / 5), sub: '(5 ml each)' });
+                cards.push({ label: 'Tablespoons', val: fmt(val / 15), sub: '(15 ml each)' });
+                cards.push({ label: 'Cups', val: fmt(val / 240, 2), sub: '(240 ml each)' });
+                cards.push({ label: 'Litres', val: fmt(val / 1000, 3), sub: 'equivalent' });
+            } else if (baseUnit === 'g') {
+                if (ing.conversions.perCube) cards.push({ label: 'Cubes', val: fmt(val / ing.conversions.perCube), sub: '(~' + ing.conversions.perCube + 'g)' });
+                if (ing.conversions.perTbsp) cards.push({ label: 'Tablespoons', val: fmt(val / ing.conversions.perTbsp), sub: '(~' + ing.conversions.perTbsp + 'g)' });
+                if (ing.conversions.perCup) cards.push({ label: 'Cups', val: fmt(val / ing.conversions.perCup, 2), sub: 'approx' });
+                if (ing.conversions.perHandful) cards.push({ label: 'Handfuls', val: fmt(val / ing.conversions.perHandful), sub: '(~' + ing.conversions.perHandful + 'g)' });
+                cards.push({ label: 'Kilograms', val: fmt(val / 1000, 3), sub: 'equivalent' });
+            }
+            while (cards.length < 4 && cards.length > 0) cards.push({ label: 'Total', val: fmt(val), sub: baseUnit + ' exact' });
+            row.innerHTML = cards.slice(0, 4).map(c => `<div class="comp-card"><div class="comp-card-label">${c.label}</div><div class="comp-card-val">${c.val}</div><div class="comp-card-sub">${c.sub}</div></div>`).join('');
+        }
+
+        function renderTips(ingKey, normalized, qty, unit, containerKey, fillPct) {
+            const panel = document.getElementById('tips-panel'), list = document.getElementById('tips-list');
+            panel.classList.remove('hidden');
+            const { val, baseUnit } = normalized;
+            const cont = CONTAINERS[containerKey];
+            const tips = [];
+            if (fillPct >= 1) {
+                tips.push(`⚠️ ${fmt(val, 0)}${baseUnit} fills the ${cont.label} to the brim (${cont.capacity}${cont.unit}). Consider a larger container.`);
+            } else {
+                tips.push(`Fill the ${cont.label} to ${Math.round(fillPct * 100)}% — the dashed line shows the exact level.`);
+            }
+            if (baseUnit === 'ml') {
+                if (val <= 5) tips.push('A single teaspoon holds exactly 5 ml.');
+                else if (val <= 15) tips.push('A tablespoon holds 15 ml — fill it ' + fmt(val / 15 * 100, 0) + '%.');
+                else if (val <= 250) tips.push('Fill to the ' + Math.round(val) + ' ml mark on a measuring cup.');
+                else tips.push('Use a measuring jug with ml markings for accuracy.');
+            } else if (baseUnit === 'g') {
+                tips.push('A kitchen scale is most accurate for ' + val + 'g.');
+                const ing = INGREDIENTS[ingKey];
+                if (ing && ing.conversions.perTbsp) tips.push('Approx ' + fmt(val / ing.conversions.perTbsp) + ' level tablespoon(s) ≈ ' + fmt(val, 0) + 'g.');
+                if (ing && ing.conversions.perCup) tips.push('1 cup ≈ ' + ing.conversions.perCup + 'g — you need ' + fmt(val / ing.conversions.perCup, 2) + ' cup(s).');
+            }
+            list.innerHTML = tips.map(t => `<div class="tip-row"><div class="tip-dot"></div><span>${t}</span></div>`).join('');
+        }
+
+        // ── Init ──
+        ['item-input', 'qty-input'].forEach(id => {
+            document.getElementById(id).addEventListener('keydown', e => { if (e.key === 'Enter') generate(); });
+        });
+        populateContainerChips('milk', { val: 500, baseUnit: 'ml' });
+        document.getElementById('item-input').value = 'Milk';
+        document.getElementById('qty-input').value = '500';
+        document.getElementById('unit-select').value = 'ml';
+        resizeCanvas();
+        generate();
+    </script>
+</body>
+
+</html>
